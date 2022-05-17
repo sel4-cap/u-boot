@@ -21,15 +21,87 @@ static inline void sync(void)
 }
 
 /* Generic virtual read/write. */
-#define __arch_getb(a)			(*(volatile unsigned char *)(a))
-#define __arch_getw(a)			(*(volatile unsigned short *)(a))
-#define __arch_getl(a)			(*(volatile unsigned int *)(a))
-#define __arch_getq(a)			(*(volatile unsigned long long *)(a))
+#define __arch_getb(_ADDR)	({										\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Reading from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned char *)(_GET_ADDR));						\
+})
+#define __arch_getw(_ADDR)	({										\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Reading from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned short *)(_GET_ADDR));						\
+})
+#define __arch_getl(_ADDR)	({										\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Reading from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned int *)(_GET_ADDR));						\
+})
+#define __arch_getq(_ADDR)	({										\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Reading from unmapped address %p\n", (_ADDR));	\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned long long *)(_GET_ADDR));					\
+})
 
-#define __arch_putb(v,a)		(*(volatile unsigned char *)(a) = (v))
-#define __arch_putw(v,a)		(*(volatile unsigned short *)(a) = (v))
-#define __arch_putl(v,a)		(*(volatile unsigned int *)(a) = (v))
-#define __arch_putq(v,a)		(*(volatile unsigned long long *)(a) = (v))
+#define __arch_putb(_VALUE,_ADDR)	({								\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Writing from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned char *)(_GET_ADDR) = (_VALUE));			\
+})
+#define __arch_putw(_VALUE,_ADDR)	({								\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Writing from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned short *)(_GET_ADDR) = (_VALUE));			\
+})
+#define __arch_putl(_VALUE,_ADDR)	({								\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Writing from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned int *)(_GET_ADDR) = (_VALUE));				\
+})
+#define __arch_putq(_VALUE,_ADDR)	({								\
+	void *_GET_ADDR;												\
+	if (sel4_io_map_is_paddr_mapped((void*)(_ADDR)))				\
+		_GET_ADDR = sel4_io_map_phys_to_virt((void*)(_ADDR));		\
+	else {															\
+		log_io("Writing from unmapped address %p\n", (_ADDR));		\
+		_GET_ADDR = (void*)(_ADDR);									\
+	}																\
+	(*(volatile unsigned long long *)(_GET_ADDR) = (_VALUE));		\
+})
 
 static inline void __raw_writesb(unsigned long addr, const void *data,
 				 int bytelen)

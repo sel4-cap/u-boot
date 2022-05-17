@@ -231,6 +231,7 @@ extern u32 __div64_32(u64 *dividend, u32 divisor);
 
 #endif /* BITS_PER_LONG */
 
+#ifndef CONFIG_SEL4
 /* Wrapper for do_div(). Doesn't modify dividend and returns
  * the result, not remainder.
  */
@@ -240,5 +241,6 @@ static inline u64 lldiv(u64 dividend, u32 divisor)
 	do_div(__res, divisor);
 	return(__res);
 }
+#endif
 
 #endif /* _ASM_GENERIC_DIV64_H */

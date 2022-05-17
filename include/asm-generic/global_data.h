@@ -479,8 +479,10 @@ struct global_data {
 	 */
 	struct list_head dmtag_list;
 };
+#ifndef CONFIG_SEL4
 #ifndef DO_DEPS_ONLY
 static_assert(sizeof(struct global_data) == GD_SIZE);
+#endif
 #endif
 
 /**

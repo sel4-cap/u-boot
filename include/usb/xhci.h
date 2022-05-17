@@ -1286,12 +1286,12 @@ struct xhci_ctrl *xhci_get_ctrl(struct usb_device *udev);
 
 static inline dma_addr_t xhci_virt_to_bus(struct xhci_ctrl *ctrl, void *addr)
 {
-	return dev_phys_to_bus(xhci_to_dev(ctrl), virt_to_phys(addr));
+	return (dma_addr_t) sel4_dma_virt_to_phys(addr);
 }
 
 static inline void *xhci_bus_to_virt(struct xhci_ctrl *ctrl, dma_addr_t addr)
 {
-	return phys_to_virt(dev_bus_to_phys(xhci_to_dev(ctrl), addr));
+	return sel4_dma_phys_to_virt((void*) addr);
 }
 
 #endif /* HOST_XHCI_H_ */

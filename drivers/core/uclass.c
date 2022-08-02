@@ -302,7 +302,10 @@ int uclass_find_device_by_namelen(enum uclass_id id, const char *name, int len,
 int uclass_find_device_by_name(enum uclass_id id, const char *name,
 			       struct udevice **devp)
 {
-	return uclass_find_device_by_namelen(id, name, strlen(name), devp);
+	if (!name)
+		return -EINVAL;
+	else
+		return uclass_find_device_by_namelen(id, name, strlen(name), devp);
 }
 
 int uclass_find_next_free_seq(struct uclass *uc)

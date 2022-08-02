@@ -66,7 +66,7 @@ void xhci_inval_cache(uintptr_t addr, u32 len)
  */
 static void xhci_segment_free(struct xhci_segment *seg)
 {
-	free(seg->trbs);
+	sel4_dma_free(seg->trbs);
 	seg->trbs = NULL;
 
 	free(seg);
@@ -94,7 +94,7 @@ static void xhci_ring_free(struct xhci_ring *ring)
 	}
 	xhci_segment_free(first_seg);
 
-	free(ring);
+	sel4_dma_free(ring);
 }
 
 /**
@@ -110,8 +110,8 @@ static void xhci_scratchpad_free(struct xhci_ctrl *ctrl)
 
 	ctrl->dcbaa->dev_context_ptrs[0] = 0;
 
-	free(xhci_bus_to_virt(ctrl, le64_to_cpu(ctrl->scratchpad->sp_array[0])));
-	free(ctrl->scratchpad->sp_array);
+	sel4_dma_free(xhci_bus_to_virt(ctrl, le64_to_cpu(ctrl->scratchpad->sp_array[0])));
+	sel4_dma_free(ctrl->scratchpad->sp_array);
 	free(ctrl->scratchpad);
 	ctrl->scratchpad = NULL;
 }
@@ -124,7 +124,7 @@ static void xhci_scratchpad_free(struct xhci_ctrl *ctrl)
  */
 static void xhci_free_container_ctx(struct xhci_container_ctx *ctx)
 {
-	free(ctx->bytes);
+	sel4_dma_free(ctx->bytes);
 	free(ctx);
 }
 
@@ -178,8 +178,8 @@ void xhci_cleanup(struct xhci_ctrl *ctrl)
 	xhci_ring_free(ctrl->cmd_ring);
 	xhci_scratchpad_free(ctrl);
 	xhci_free_virt_devices(ctrl);
-	free(ctrl->erst.entries);
-	free(ctrl->dcbaa);
+	sel4_dma_free(ctrl->erst.entries);
+	sel4_dma_free(ctrl->dcbaa);
 	memset(ctrl, '\0', sizeof(struct xhci_ctrl));
 }
 
@@ -194,7 +194,7 @@ static void *xhci_malloc(unsigned int size)
 	void *ptr;
 	size_t cacheline_size = max(XHCI_ALIGNMENT, CACHELINE_SIZE);
 
-	ptr = memalign(cacheline_size, ALIGN(size, cacheline_size));
+	ptr = sel4_dma_memalign(cacheline_size, ALIGN(size, cacheline_size));
 	BUG_ON(!ptr);
 	memset(ptr, '\0', size);
 
@@ -308,7 +308,7 @@ struct xhci_ring *xhci_ring_alloc(struct xhci_ctrl *ctrl, unsigned int num_segs,
 	struct xhci_ring *ring;
 	struct xhci_segment *prev;
 
-	ring = malloc(sizeof(struct xhci_ring));
+	ring = sel4_dma_malloc(sizeof(struct xhci_ring));
 	BUG_ON(!ring);
 
 	if (num_segs == 0)
@@ -387,7 +387,7 @@ static int xhci_scratchpad_alloc(struct xhci_ctrl *ctrl)
 	BUG_ON(i == 16);
 
 	page_size = 1 << (i + 12);
-	buf = memalign(page_size, num_sp * page_size);
+	buf = sel4_dma_memalign(page_size, num_sp * page_size);
 	if (!buf)
 		goto fail_sp3;
 	memset(buf, '\0', num_sp * page_size);
@@ -404,7 +404,7 @@ static int xhci_scratchpad_alloc(struct xhci_ctrl *ctrl)
 	return 0;
 
 fail_sp3:
-	free(scratchpad->sp_array);
+	sel4_dma_free(scratchpad->sp_array);
 
 fail_sp2:
 	free(scratchpad);

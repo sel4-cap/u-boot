@@ -1,7 +1,11 @@
 #ifndef __ASM_ARM_TYPES_H
 #define __ASM_ARM_TYPES_H
 
+#ifdef __LP64__
+#include <asm-generic/int-l64.h>
+#else
 #include <asm-generic/int-ll64.h>
+#endif
 
 typedef unsigned short umode_t;
 

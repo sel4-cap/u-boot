@@ -40,9 +40,15 @@ typedef struct {
 /* Type of a signal handler.  */
 typedef void (*__kernel_sighandler_t)(int);
 
+
+
+#ifdef __LP64__
+#include <asm/posix_types_microkit.h>
+typedef long __kernel_key_t;
+#else
+#include <asm/posix_types.h>
 /* Type of a SYSV IPC key.  */
 typedef int __kernel_key_t;
-
-#include <asm/posix_types.h>
+#endif
 
 #endif /* _LINUX_POSIX_TYPES_H */

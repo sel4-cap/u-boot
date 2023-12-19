@@ -13,13 +13,15 @@
 #define LONG_MAX	((long)(~0UL>>1))
 #define LONG_MIN	(-LONG_MAX - 1)
 #define ULONG_MAX	(~0UL)
-#ifndef __LP64__
+#ifndef __LP64__ //picolibc
 #define LLONG_MAX	((long long)(~0ULL>>1))
 #endif
 #define LLONG_MIN	(-LLONG_MAX - 1)
 #define ULLONG_MAX	(~0ULL)
-#ifndef SIZE_MAX
+#ifndef __LP64__ //picolibc
+#ifndef SIZE_MAX 
 #define SIZE_MAX	(~(size_t)0)
+#endif
 #endif
 #ifndef SSIZE_MAX
 #define SSIZE_MAX	((ssize_t)(SIZE_MAX >> 1))
@@ -42,7 +44,9 @@
 #define UINT32_MAX	U32_MAX
 #define UINT64_MAX	U64_MAX
 
+#ifndef __LP64__
 #define INT32_MAX	S32_MAX
+#endif
 
 #define STACK_MAGIC	0xdeadbeef
 

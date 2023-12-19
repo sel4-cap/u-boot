@@ -65,7 +65,9 @@
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-always_005finline-function-attribute
  * clang: mentioned
  */
+#ifndef __LP64__ //picolibc
 #define __always_inline                 inline __attribute__((__always_inline__))
+#endif 
 
 /*
  * The second argument is optional (default 0), so we use a variadic macro
@@ -246,7 +248,9 @@
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-section-variable-attribute
  * clang: https://clang.llvm.org/docs/AttributeReference.html#section-declspec-allocate
  */
+#ifndef __LP64__ //picolibc
 #define __section(S)                    __attribute__((__section__(S)))
+#endif
 
 /*
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-unused-function-attribute

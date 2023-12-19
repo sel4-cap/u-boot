@@ -90,8 +90,10 @@ typedef unsigned short		ushort;
 typedef unsigned int		uint;
 typedef unsigned long		ulong;
 
+#ifndef __LP64__ //picolibc
 #ifndef __BIT_TYPES_DEFINED__
 #define __BIT_TYPES_DEFINED__
+#endif
 
 typedef		__u8		u_int8_t;
 typedef		__s8		int8_t;

@@ -13,7 +13,9 @@
 #define LONG_MAX	((long)(~0UL>>1))
 #define LONG_MIN	(-LONG_MAX - 1)
 #define ULONG_MAX	(~0UL)
+#ifndef __LP64__
 #define LLONG_MAX	((long long)(~0ULL>>1))
+#endif
 #define LLONG_MIN	(-LLONG_MAX - 1)
 #define ULLONG_MAX	(~0ULL)
 #ifndef SIZE_MAX

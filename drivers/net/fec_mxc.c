@@ -34,6 +34,9 @@
 #include "fec_mxc.h"
 #include <eth_phy.h>
 
+#include <uboot_helper.h>
+#include <dma/dma.h>
+
 DECLARE_GLOBAL_DATA_PTR;
 
 /*

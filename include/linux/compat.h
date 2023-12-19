@@ -171,7 +171,11 @@ typedef u64 sector_t;
 typedef u64 blkcnt_t;
 #else
 typedef unsigned long sector_t;
+#ifdef __LP64__
+typedef long blkcnt_t;
+#else
 typedef unsigned long blkcnt_t;
+#endif
 #endif
 
 /* module */

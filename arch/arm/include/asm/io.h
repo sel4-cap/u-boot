@@ -20,39 +20,33 @@ static inline void sync(void)
 {
 }
 
+
+
 /* Generic virtual read/write. */
-#define __arch_getb(_ADDR)	({										\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned char *)(_GET_ADDR));						\
+#define __arch_getb(_ADDR)	({										\													
+	(*(volatile unsigned char *)(_ADDR));						\
 })
-#define __arch_getw(_ADDR)	({										\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned short *)(_GET_ADDR));						\
+#define __arch_getw(_ADDR)	({										\														
+	(*(volatile unsigned short *)(_ADDR));						\
 })
-#define __arch_getl(_ADDR)	({										\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned int *)(_GET_ADDR));						\
+#define __arch_getl(_ADDR)	({										\															
+	(*(volatile unsigned int *)(_ADDR));						\
 })
-#define __arch_getq(_ADDR)	({										\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned long long *)(_GET_ADDR));					\
+#define __arch_getq(_ADDR)	({										\														
+	(*(volatile unsigned long long *)(_ADDR));					\
 })
 
-#define __arch_putb(_VALUE,_ADDR)	({								\
-	void *_GET_ADDR;												\																
-	(*(volatile unsigned char *)(_GET_ADDR) = (_VALUE));			\
+#define __arch_putb(_VALUE,_ADDR)	({								\															
+	(*(volatile unsigned char *)(_ADDR) = (_VALUE));			\
 })
-#define __arch_putw(_VALUE,_ADDR)	({								\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned short *)(_GET_ADDR) = (_VALUE));			\
+#define __arch_putw(_VALUE,_ADDR)	({								\														
+	(*(volatile unsigned short *)(_ADDR) = (_VALUE));			\
 })
-#define __arch_putl(_VALUE,_ADDR)	({								\
-	void *_GET_ADDR;												\															
-	(*(volatile unsigned int *)(_GET_ADDR) = (_VALUE));				\
+#define __arch_putl(_VALUE,_ADDR)	({								\													
+	(*(volatile unsigned int *)(_ADDR) = (_VALUE));				\
 })
-#define __arch_putq(_VALUE,_ADDR)	({								\
-	void *_GET_ADDR;												\																
-	(*(volatile unsigned long long *)(_GET_ADDR) = (_VALUE));		\
+#define __arch_putq(_VALUE,_ADDR)	({								\																
+	(*(volatile unsigned long long *)(_ADDR) = (_VALUE));		\
 })
 
 static inline void __raw_writesb(unsigned long addr, const void *data,

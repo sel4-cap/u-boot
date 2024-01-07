@@ -41,8 +41,10 @@
 #define S64_MIN		((s64)(-S64_MAX - 1))
 
 /* Aliases defined by stdint.h */
+#ifndef __LP64__ //picolibc
 #define UINT32_MAX	U32_MAX
 #define UINT64_MAX	U64_MAX
+#endif
 
 #ifndef __LP64__
 #define INT32_MAX	S32_MAX

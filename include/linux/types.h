@@ -8,8 +8,10 @@
 #ifndef __KERNEL_STRICT_NAMES
 
 typedef __kernel_fd_set		fd_set;
+#ifndef __LP64__ // none-elf compiler
 typedef __kernel_dev_t		dev_t;
 typedef __kernel_ino_t		ino_t;
+#endif 
 typedef __kernel_mode_t		mode_t;
 typedef __kernel_nlink_t	nlink_t;
 typedef __kernel_off_t		off_t;
@@ -19,8 +21,10 @@ typedef __kernel_key_t		key_t;
 typedef __kernel_suseconds_t	suseconds_t;
 
 #ifdef __KERNEL__
+#ifndef __LP64__ // none-elf compiler
 typedef __kernel_uid32_t	uid_t;
 typedef __kernel_gid32_t	gid_t;
+#endif 
 typedef __kernel_uid16_t        uid16_t;
 typedef __kernel_gid16_t        gid16_t;
 
@@ -28,16 +32,20 @@ typedef unsigned long		uintptr_t;
 
 #ifdef CONFIG_UID16
 /* This is defined by include/asm-{arch}/posix_types.h */
+#ifndef __LP64__ // none-elf compiler
 typedef __kernel_old_uid_t	old_uid_t;
 typedef __kernel_old_gid_t	old_gid_t;
+#endif
 #endif /* CONFIG_UID16 */
 
 /* libc5 includes this file to define uid_t, thus uid_t can never change
  * when it is included by non-kernel code
  */
 #else
+#ifndef __LP64__ // none-elf compiler
 typedef __kernel_uid_t		uid_t;
 typedef __kernel_gid_t		gid_t;
+#endif
 #endif /* __KERNEL__ */
 
 #if defined(__GNUC__) && !defined(__STRICT_ANSI__)

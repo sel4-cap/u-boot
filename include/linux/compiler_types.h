@@ -138,12 +138,14 @@ struct ftrace_likely_data {
  * Do not use __always_inline here, since currently it expands to inline again
  * (which would break users of __always_inline).
  */
+#ifndef __LP64__
 #if !CONFIG_IS_ENABLED(OPTIMIZE_INLINING)
 #define inline inline __attribute__((__always_inline__)) __gnu_inline \
 	__inline_maybe_unused notrace
 #else
 #define inline inline                                    __gnu_inline \
 	__inline_maybe_unused notrace
+#endif
 #endif
 
 /*

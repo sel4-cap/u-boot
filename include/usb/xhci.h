@@ -23,7 +23,7 @@
 #include <linux/list.h>
 #include <linux/compat.h>
 
-#include <dma/dma.h>
+#include <dma.h>
 
 #define MAX_EP_CTX_NUM		31
 #define XHCI_ALIGNMENT		64

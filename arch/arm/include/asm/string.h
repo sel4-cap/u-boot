@@ -49,9 +49,9 @@ extern void __memzero(void *ptr, __kernel_size_t n);
 		(p);							\
 	})
 
-#define memzero(p,n) ({ if ((n) != 0) __memzero((p),(n)); (p); })
-#else
-extern void memzero(void *ptr, __kernel_size_t n);
+// #define memzero(p,n) ({ if ((n) != 0) __memzero((p),(n)); (p); })
+// #else
+// extern void memzero(void *ptr, __kernel_size_t n);
 #endif
 
 #endif
